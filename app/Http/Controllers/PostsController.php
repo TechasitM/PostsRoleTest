@@ -11,9 +11,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $PostName = "หน้าแรกบทความ";
-        $CountPost = "จำนวนบทความ 100 หน้า";
-        return view('post.index',compact('PostName','CountPost'));
+        $post = Post::with('SubCategory')->orderBy('id','desc')->where('language_id','th')->get();
+
+        return view('post.index',compact('post'));
     }
 
     /**

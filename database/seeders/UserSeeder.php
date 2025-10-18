@@ -13,16 +13,18 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = new\App\Models\User();
-        $user->name = "Admin Laravel 9";
-        $user->email = "laravel9@gmail.com";
-        $user->password = Hash::make('password');
-        $user->save();
+        //$user = new \App\Models\User();
+        //$user->name = "Admin Laravel 9";
+        //$user->email = "laravel9@gmail.com";
+        //$user->password = Hash::make('password');
+        //$user->save();
 
-        $user = new\App\Models\User();
-        $user->name = "Admin Yii";
-        $user->email = "yii@gmail.com";
-        $user->password = Hash::make('password');
-        $user->save();
+        //$user = new \App\Models\User();
+        //$user->name = "Admin Yii";
+        //$user->email = "yii@gmail.com";
+        //$user->password = Hash::make('password');
+        //$user->save();
+
+        \App\Models\user::factory()->count(20)->create();
     }
 }

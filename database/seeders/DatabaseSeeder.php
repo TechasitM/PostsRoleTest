@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UserSeeder::class, // สมมติว่าคุณมีคลาสชื่อ UserSeeder
-            // หรือเพิ่ม Seeder อื่น ๆ ที่คุณสร้างไว้ เช่น PostSeeder::class,
+            UserSeeder::class,
+            PostSeeder::class,
         ]);
         // User::factory(10)->create();
         User::factory()->create([
