@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Depart;
 
 class PostsController extends Controller
 {
@@ -12,8 +13,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $post = Post::orderBy('id','desc')->get();
-        return view('post.index',compact('post'));
+        //$post = Post::orderBy('id','desc')->get();
+        $posts = \DB::select('select * from posts order By id desc');
+        return view('post.index',compact('posts'));
     }
 
     /**
@@ -21,7 +23,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return "Posts Create";
+        return view('post.create');
     }
 
     /**
@@ -29,7 +31,12 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        return "Posts Store";
+        $title = $request->post_title ;
+        $detail = $request->post_detail;
+
+        \DB::insert('insert into posts (post_title,post_detail) values (?,?)',[$title,$detail]);
+
+        return "บันทึกรายการเรียบร้อยแล้ว";
     }
 
     /**
@@ -43,9 +50,10 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $post = \DB::select('select * from posts where id = ?',[$id]);
+        return view('post.edit',compact('posts'));
     }
 
     /**
@@ -53,14 +61,20 @@ class PostsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $title = $request->post_title ;
+        $title = $request->post_detail ;
+
+        \DB::update('update posts set post_title = ? , post_detail = ? where id = ?',[$title],[$detail],[$id]);
+        return redirect('/posts');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $post = \DB::delete('DELETE FROM posts WHERE id = ?', [$id]);
+
+        return redirect('/posts');
     }
 }
