@@ -17,6 +17,7 @@ Route::get('post/edit/{id}',[PostsController::class,'edit'])->name('edit');
 Route::post('post/update/{id}',[PostsController::class,'update'])->name('update');
 Route::get('post/destroy/{id}',[PostsController::class,'destroy'])->name('destroy');
 
+Route::get('post/show/{id}',[PostsController::class,'show'])->name('show');
 
 Route::get('/category',[CategoryController::class,'index']);
 Route::get('category/create',[CategoryController::class,'create'])->name('category.create');

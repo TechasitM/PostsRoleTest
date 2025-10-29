@@ -14,7 +14,10 @@ class PostsController extends Controller
     public function index()
     {
         //$post = Post::orderBy('id','desc')->get();
-        $posts = \DB::select('select * from posts order By id desc');
+        //$posts = \DB::select('select * from posts order By id desc');
+
+       $posts = Post::userid()->visitor()->paginate(5) ;
+
         return view('post.index',compact('posts'));
     }
 
@@ -44,7 +47,8 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $posts = Post::find($id);
+        return view('post.show',compact('posts'));
     }
 
     /**
