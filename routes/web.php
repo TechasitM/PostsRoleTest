@@ -4,11 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\StudentsController;
 
+Route::get('student/all',[StudentsController::class,'index'])->name('student') ;
 
 Route::get('/',[HomeController::class,'index']);
 Route::get('/aboute',[HomeController::class,'aboute']);
-
 
 Route::get('/posts',[PostsController::class,'index']);
 Route::get('create',[PostsController::class,'create'])->name('create');
