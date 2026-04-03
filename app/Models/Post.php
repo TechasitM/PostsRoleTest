@@ -10,10 +10,10 @@ class Post extends Model
     use HasFactory;
 
     public function scopeUserID($query){
-        return $query->where('user_id',1);
+        return $query->where('user_id',0);
     }
-
+    
     public function scopeVisitor($query){
-        return $query->where('visitors','>=',500);
+        return $query->where('visitors','>=', 500);
     }
 }

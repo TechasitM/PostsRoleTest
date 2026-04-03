@@ -28,6 +28,9 @@
                         <a class="nav-link" href="{{ url('/category') }}">ประเภทบทความ</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/products') }}">สินค้า</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ url('/aboute') }}">เกี่ยวกับเรา</a>
                     </li>
                 </ul>
