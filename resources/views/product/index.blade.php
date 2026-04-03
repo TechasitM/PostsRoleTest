@@ -18,15 +18,20 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td scope="col">{{ $product->id }}</td>
-                                <td scope="col"><img src="{{ asset('uploads/product/' . $product->image) }}"></td>
+                                <td scope="col"><img src="{{ asset('uploads/resize/' . $product->image) }}" height="80"></td>
                                 <td scope="col">{{ $product->name }}</td>
                                 <td scope="col" style="width: 50%">{{ $product->price }}</td>
                                 <td scope="col">
                                     <a href="{{ route('products.edit', $product->id) }}"
-                                        class="btn btn-info btn-sm">แก้ไข</a>|
-                                    <a href="{{ route('products.destroy', $product->id) }}" class="btn btn-danger btn-sm"
+                                        class="btn btn-info btn-sm">แก้ไข</a>
+                                    {{-- <a href="{{ route('products.destroy', $product->id) }}" class="btn btn-danger btn-sm"
                                         onclick="return confirm('ยืนยันการลบหรือไม่')">ลบ
-                                    </a>
+                                    </a> --}}
+                                </td>
+                                 <td scope="col">
+                                    {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'delete']) !!}
+                                    {!! Form::submit('ลบ', ['class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('ยืนยันการลบหรือไม่')"]) !!}
+                                    {!! Form::close() !!}
                                 </td>
                             </tr>
                         @endforeach

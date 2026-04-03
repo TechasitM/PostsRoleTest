@@ -31,7 +31,7 @@
             </div>
             <div class="col-auto">
                 {!! Form::label('image', 'รูปสินค้า', ['for' => 'formFileSm']) !!}
-                {!! Form::file('image', null, ['class' => 'form-control', 'id' => 'formFileSm']) !!}
+                {!! Form::file('image', ['class' => 'form-control', 'id' => 'formFileSm']) !!}
             </div><br />
             <div class="col-auto">
                 {!! Form::submit('บันทึกสินค้า', ['class' => 'btn btn-success']) !!}

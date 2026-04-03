@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use  App\Models\Product ; 
-use Image;
+use Intervention\Image\Laravel\Facades\Image;
 use File ; 
 class ProductsController extends Controller
 {
@@ -14,34 +14,43 @@ class ProductsController extends Controller
                 ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    public function create(){
+    public function create() {
         return view('product.create');
     }
+    
+    public function store(ProductRequest $request)
+    {
+        $product = new Product();
 
-    public function store(ProductRequest $request){
-
-        $product = new Product(); 
         if ($request->hasFile('image')) {
 
-            $rename = time() . '.' .$request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move('uploads/product/', $rename);
-            //resize image
-            Image::make((public_path('uploads/product/') . $rename))->resize(450, 450)
-                        ->save((public_path('uploads/resize/') . $rename));
+            $file = $request->file('image');
+            $rename = time() . '.' . $file->getClientOriginalExtension();
 
-            $product->image = $rename; 
+            // resize จาก temp file โดยตรง
+            Image::read($file)
+                ->resize(450, 450)
+                ->save(public_path('uploads/resize/' . $rename));
 
-        }else{
-            $product->image = "https://via.placeholder.com/450x450.png"; 
+            // move ไฟล์จริง
+            $file->move(public_path('uploads/product/'), $rename);
+
+            $product->image = $rename;
+
+        } else {
+            $product->image = "https://via.placeholder.com/450x450.png";
         }
-            $product->name = $request->name ; 
-            $product->detail = $request->detail ; 
-            $product->price = $request->price ; 
-            $product->stock = $request->stock ; 
-            $product->save(); 
-            return redirect('/products'); 
-        
+
+        $product->name = $request->name;
+        $product->detail = $request->detail;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+
+        $product->save();
+
+        return redirect('/products');
     }
+
     //เรียกหน้าจอฟอร์มแก้ไขพร้อมดึงข้อมูลตาม id ที่ส่งเข้ามา
     public function edit($id){
         $product = Product::findOrFail($id) ; 
