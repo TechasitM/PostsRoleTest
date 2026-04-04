@@ -13,12 +13,13 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //$post = Post::orderBy('id','desc')->get();
-        //$posts = \DB::select('select * from posts order By id desc');
+        if (request()->has('trashed')) {
+            $posts = Post::onlyTrashed()->paginate(10);
+        } else {
+            $posts = Post::paginate(10);
+        }
 
-       $posts = Post::userid()->visitor()->paginate(5) ;
-
-        return view('post.index',compact('posts'));
+        return view('post.index', compact('posts'));
     }
 
     /**
@@ -77,8 +78,25 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = \DB::delete('DELETE FROM posts WHERE id = ?', [$id]);
+        Post::where('id', $id)->delete();
+        return redirect('/posts');
+    }
 
+    public function trashed()
+    {
+        $posts = Post::onlyTrashed()->latest()->get();
+        return redirect('/posts');
+    }
+
+    public function restore($id)
+    {
+        Post::where('id', $id)->restore();
+        return redirect('/posts');
+    }
+
+    public function restoreAll()
+    {
+        Post::onlyTrashed()->restore();
         return redirect('/posts');
     }
 }

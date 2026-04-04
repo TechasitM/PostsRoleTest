@@ -11,6 +11,12 @@ use App\Http\Controllers\ProductsController;
 use App\Models\Order ;
 use App\Models\Product ;
 
+//Soft Delete and Restore
+Route::get('posts/trashed',[PostsController::class,'trashed'])->name('posts.trashed');
+Route::get('posts/restore/{id}',[PostsController::class,'restore'])->name('posts.restore');
+Route::get('posts/restore-all',[PostsController::class,'restoreAll'])->name('posts.restoreAll');
+
+//products
 Route::get('products',[ProductsController::class,'index']) ; 
 Route::get('products/create',[ProductsController::class,'create'])->name('products.create') ; 
 Route::post('products/store',[ProductsController::class,'store'])->name('products.store') ; 
@@ -28,20 +34,18 @@ Route::get('/order/product/{id}',function($id){
     return $order->rOrder()->orderBy('id','desc')->get();
 });
 
-
 Route::get('student/all',[StudentsController::class,'index'])->name('student') ;
 
 Route::get('/',[HomeController::class,'index']);
 Route::get('/aboute',[HomeController::class,'aboute']);
 
-Route::get('/posts',[PostsController::class,'index']);
-Route::get('create',[PostsController::class,'create'])->name('create');
+Route::get('/posts',[PostsController::class,'index'])->name('posts.index');
+Route::get('posts/create',[PostsController::class,'create'])->name('create');
 Route::post('store',[PostsController::class,'store'])->name('store');
-Route::get('post/edit/{id}',[PostsController::class,'edit'])->name('edit');
-Route::post('post/update/{id}',[PostsController::class,'update'])->name('update');
-Route::get('post/destroy/{id}',[PostsController::class,'destroy'])->name('destroy');
-
-Route::get('post/show/{id}',[PostsController::class,'show'])->name('show');
+Route::get('posts/edit/{id}',[PostsController::class,'edit'])->name('edit');
+Route::post('posts/update/{id}',[PostsController::class,'update'])->name('update');
+Route::get('posts/destroy/{id}',[PostsController::class,'destroy'])->name('destroy');
+Route::get('posts/show/{id}',[PostsController::class,'show'])->name('show');
 
 Route::get('/category',[CategoryController::class,'index']);
 Route::get('category/create',[CategoryController::class,'create'])->name('category.create');

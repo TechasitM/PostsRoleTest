@@ -4,6 +4,15 @@
     <section class="py-5 container">
         <div class="row">
             <div class="col-lg-12 mx-auto">
+                <br />
+                <div class="float-end">
+                    @if (request()->has('trashed'))
+                        <a href="{{ route('posts.index') }}" class="btn btn-info">ดูบทความทั้งหมด</a>
+                        <a href="{{ route('posts.restoreAll') }}" class="btn btn-success">กู้คืนทั้งหมด</a>
+                    @else
+                        <a href="{{ route('posts.index', ['trashed' => 'post']) }}" class="btn btn-primary">บทความที่ถูกลบ</a>
+                    @endif
+                </div>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -22,9 +31,13 @@
                                 <td scope="col">
                                     <a href="{{ route('show', $post->id) }}" class="btn btn-success btn-sm">ดู</a>|
                                     <a href="{{ route('edit', $post->id) }}" class="btn btn-info btn-sm">แก้ไข</a>|
-                                    <a href="{{ route('destroy', $post->id) }}" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('ยืนยันการลบหรือไม่')">ลบ
-                                    </a>
+                                    @if (request()->has('trashed'))
+                                        <a href="{{ route('posts.restore', $post->id) }}"
+                                            class="btn btn-success btn-sm">กู้คืน</a>
+                                    @else
+                                        <a href="{{ route('destroy', $post->id) }}" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('ยืนยันการลบหรือไม่')">ลบ</a>
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>
