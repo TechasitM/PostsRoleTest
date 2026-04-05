@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Session;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -56,6 +57,8 @@ class CategoryController extends Controller
     $category = new Category();
     $category ->category_name = $request->category_name;
     $category ->save();
+
+    session::flash('success','เพิ่มข้อมูลเรียบร้อย');
     
     return redirect()->back();
     }
