@@ -7,9 +7,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StudentsController;
 
 use App\Http\Controllers\ProductsController;
-
+use App\Http\Controllers\EmailController;
 use App\Models\Order ;
 use App\Models\Product ;
+
+Route::get('send-email',[EmailController::class,'send_email']);
 
 //Soft Delete and Restore
 Route::get('posts/trashed',[PostsController::class,'trashed'])->name('posts.trashed');
