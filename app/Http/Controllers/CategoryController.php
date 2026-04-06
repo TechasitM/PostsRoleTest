@@ -47,20 +47,21 @@ class CategoryController extends Controller
 
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-    //$data = [
-    //   'category_name' => $request->category_name 
-    //] ;
-    //DB::table('categories')->insert($data);
-    
-    $category = new Category();
-    $category ->category_name = $request->category_name;
-    $category ->save();
+        //$data = [
+        //   'category_name' => $request->category_name 
+        //] ;
+        //DB::table('categories')->insert($data);
+        
+        $category = new Category();
+        $category ->category_name = $request->category_name;
+        $category ->save();
 
-    session::flash('success','เพิ่มข้อมูลเรียบร้อย');
-    
-    return redirect()->back();
+        Session::flash('success','เพิ่มข้อมูลเรียบร้อย');
+        
+        return redirect()->back();
     }
 
     public function destroy($id){

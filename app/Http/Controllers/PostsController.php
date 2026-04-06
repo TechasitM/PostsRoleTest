@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Depart;
+use Session;
 
 class PostsController extends Controller
 {
+    /**
+    * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $posts = Post::find($id);
+        return view('post.show',compact('posts'));
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -39,18 +49,11 @@ class PostsController extends Controller
         $detail = $request->post_detail;
 
         \DB::insert('insert into posts (post_title,post_detail) values (?,?)',[$title,$detail]);
+        Session::flash('success','อัพเดทข้อมูลเรียบร้อยแล้ว') ;
 
-        return "บันทึกรายการเรียบร้อยแล้ว";
+        return redirect()->route('posts.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $posts = Post::find($id);
-        return view('post.show',compact('posts'));
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -58,19 +61,21 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = \DB::select('select * from posts where id = ?',[$id]);
-        return view('post.edit',compact('posts'));
+        return view('post.edit',compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request ,$id)
     {
-        $title = $request->post_title ;
-        $title = $request->post_detail ;
+        $title = $request->input('post_title') ;
+        $detail = $request->input('post_detail'); 
 
-        \DB::update('update posts set post_title = ? , post_detail = ? where id = ?',[$title],[$detail],[$id]);
-        return redirect('/posts');
+        \DB::update('update posts set post_title = ? , post_detail = ? where id = ?',[$title,$detail,$id] );
+
+        Session::flash('success','อัพเดทข้อมูลเรียบร้อยแล้ว') ;
+        return redirect('/posts'); 
     }
 
     /**
@@ -79,6 +84,7 @@ class PostsController extends Controller
     public function destroy($id)
     {
         Post::where('id', $id)->delete();
+        Session::flash('success','ลบข้อมูลเรียบร้อยแล้ว');
         return redirect('/posts');
     }
 
