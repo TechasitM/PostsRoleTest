@@ -55,3 +55,8 @@ Route::post('categorystore',[CategoryController::class,'store'])->name('category
 Route::get('category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
 Route::post('category/update/{id}',[CategoryController::class,'update'])->name('category.update');
 Route::get('category/destroy/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
+Auth::routes();
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
