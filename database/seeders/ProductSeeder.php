@@ -18,31 +18,41 @@ class ProductSeeder extends Seeder
      */
     public function run()
         {
-           $faker = Faker::create();
+        $faker = Faker::create();
 
-    foreach (range(1, 100) as $index) {
+            // foreach (range(1, 100) as $index) {
 
-        $imageName = Str::random(10) . '.jpg';
+            //     $imageName = Str::random(10) . '.jpg';
 
-        // โหลดรูปจาก internet
-        $imageContent = file_get_contents('https://picsum.photos/450');
+            //     // โหลดรูปจาก internet
+            //     $imageContent = file_get_contents('https://picsum.photos/450');
 
-        // save ลงเครื่อง
-        File::put(public_path('uploads/product/' . $imageName), $imageContent);
+            //     // save ลงเครื่อง
+            //     File::put(public_path('uploads/product/' . $imageName), $imageContent);
 
-        // copy ไป resize (หรือจะใช้ Intervention ก็ได้)
-        File::copy(
-            public_path('uploads/product/' . $imageName),
-            public_path('uploads/resize/' . $imageName)
-        );
+            //     // copy ไป resize (หรือจะใช้ Intervention ก็ได้)
+            //     File::copy(
+            //         public_path('uploads/product/' . $imageName),
+            //         public_path('uploads/resize/' . $imageName)
+            //     );
 
-        DB::table('products')->insert([
-            'name' => $faker->city,
-            'detail' => $faker->paragraph(2),
-            'price' => $faker->numberBetween(500, 8000),
-            'stock'=> $faker->numberBetween(100, 1000),
-            'image' => $imageName
-        ]);
+            //     DB::table('products')->insert([
+            //         'name' => $faker->city,
+            //         'detail' => $faker->paragraph(2),
+            //         'price' => $faker->numberBetween(500, 8000),
+            //         'stock'=> $faker->numberBetween(100, 1000),
+            //         'image' => $imageName
+            //     ]);
+            // }
+
+            foreach (range(1, 100) as $index) { 
+            DB::table('products')->insert([
+                'name' => $faker->city,
+                'detail' => $faker->paragraph($nb =2),
+                'price' => $faker->numberBetween($min = 500, $max = 8000),
+                'stock' => $faker->numberBetween($min = 100, $max = 1000),
+                'image' => $faker->imageUrl(400, 400)
+            ]);
         }
-    }
+        }
 }

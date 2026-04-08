@@ -12,7 +12,8 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
-        "rdx/laravelcollective-html": "^6.9"
+        "rdx/laravelcollective-html": "^6.9",
+        "spatie/laravel-permission": "^6.25"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",

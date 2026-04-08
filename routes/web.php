@@ -5,9 +5,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StudentsController;
-
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\EmailController;
+
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 use App\Models\Order ;
 use App\Models\Product ;
 
@@ -38,9 +40,11 @@ Route::get('/order/product/{id}',function($id){
 
 Route::get('student/all',[StudentsController::class,'index'])->name('student') ;
 
+//เส้นทางสำหรับหน้าแรกและเกี่ยวกับเรา
 Route::get('/',[HomeController::class,'index']);
 Route::get('/aboute',[HomeController::class,'aboute']);
 
+//เส้นทางสำหรับ Post
 Route::get('/posts',[PostsController::class,'index'])->name('posts.index');
 Route::get('posts/create',[PostsController::class,'create'])->name('create');
 Route::post('store',[PostsController::class,'store'])->name('store');
@@ -49,6 +53,7 @@ Route::post('posts/update/{id}',[PostsController::class,'update'])->name('update
 Route::get('posts/destroy/{id}',[PostsController::class,'destroy'])->name('destroy');
 Route::get('posts/show/{id}',[PostsController::class,'show'])->name('show');
 
+//เส้นทางสำหรับ Category
 Route::get('/category',[CategoryController::class,'index']);
 Route::get('category/create',[CategoryController::class,'create'])->name('category.create');
 Route::post('categorystore',[CategoryController::class,'store'])->name('category.store');
@@ -57,6 +62,7 @@ Route::post('category/update/{id}',[CategoryController::class,'update'])->name('
 Route::get('category/destroy/{id}',[CategoryController::class,'destroy'])->name('category.destroy');
 Auth::routes();
 
-Auth::routes();
+Route::resource('users', UserController::class);
+Route::resource('roles', RoleController::class);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
