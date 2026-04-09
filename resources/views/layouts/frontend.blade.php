@@ -20,13 +20,22 @@
         <div class="container d-flex flex-wrap">
             <ul class="nav me-auto">
                 <li class="nav-item"><a href="{{ url('/') }}" class="nav-link link-dark px-2 active"
-                        aria-current="page">หน้าหลัก</a></li>
-                <li class="nav-item"><a href="{{ url('/posts') }}" class="nav-link link-dark px-2">บทความ</a></li>
-                <li class="nav-item"><a href="{{ url('/category') }}" class="nav-link link-dark px-2">ประเภทบทความ</a></li>
-                <li class="nav-item"><a href="{{ route('roles.index') }}" class="nav-link link-dark px-2">จัดการบทบาท</a></li>
-                <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link link-dark px-2">จัดการสมาชิก</a></li>
-                <li class="nav-item"><a href="{{ url('/products') }}" class="nav-link link-dark px-2">สินค้า</a></li>
-                <li class="nav-item"><a href="{{ url('/aboute') }}" class="nav-link link-dark px-2">เกี่ยวกับเรา</a>
+                        aria-current="page">{{ __('messages.HOME') }}</a></li>
+                <li class="nav-item"><a href="{{ url('/posts') }}"
+                        class="nav-link link-dark px-2">{{ __('messages.ARTICLE') }}</a></li>
+                <li class="nav-item"><a href="{{ url('/category') }}"
+                        class="nav-link link-dark px-2">{{ __('messages.CATEGORY') }}</a>
+                </li>
+                <li class="nav-item"><a
+                        href="{{ route('roles.index') }}"class="nav-link link-dark px-2">{{ __('messages.ROLE-MANAGEMENT') }}</a>
+                </li>
+                <li class="nav-item"><a
+                        href="{{ route('users.index') }}"class="nav-link link-dark px-2">{{ __('messages.USERS-MANAGEMENT') }}</a>
+                </li>
+                <li class="nav-item"><a href="{{ url('/products') }}"
+                        class="nav-link link-dark px-2">{{ __('messages.PRODUCT') }}</a></li>
+                <li class="nav-item"><a href="{{ url('/aboute') }}"
+                        class="nav-link link-dark px-2">{{ __('messages.ABOUTE') }}</a>
                 </li>
             </ul>
             <ul class="nav">
@@ -56,7 +65,16 @@
                             </form>
                         </div>
                     </li>
+
                 @endguest
+                <li>
+                    <select class="form-control changeLang">
+                        <option value="en" {{ session()->get('locale') == 'en' ? 'selected' : '' }}>English
+                        </option>
+                        <option value="th" {{ session()->get('locale') == 'th' ? 'selected' : '' }}>ภาษาไทย
+                        </option>
+                    </select>
+                </li>
             </ul>
         </div>
     </nav>
@@ -77,6 +95,15 @@
         )
     </script>
 @endif
+
+<script type="text/javascript">
+    var url = "{{ route('changeLang') }}";
+
+    $(".changeLang").change(function() {
+        window.location.href = url + "?lang=" + $(this).val();
+    });
+</script>
+
 @yield('js_before')
 
 </html>
