@@ -7,12 +7,16 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\FrontendController ;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Models\Order ;
 use App\Models\Product ;
 
+
+
+Route::get('getDataApi', [FrontendController::class, 'getDataApi']);
 Route::get('send-email',[EmailController::class,'send_email']);
 
 //Soft Delete and Restore
